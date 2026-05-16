@@ -32,6 +32,7 @@ const ChatBox = ({ currentUser, activeChat }) => {
       setChatLoading(false)
 
     }catch(error){
+      setChatLoading(false)
       console.log(error)
     }
 
@@ -118,7 +119,7 @@ const ChatBox = ({ currentUser, activeChat }) => {
   };
 
   return (
-    <div className={`flex flex-col h-full p-2 gap-2 ${activeChat?.id ? "" : "hidden"}`}>
+    <div className={` flex flex-col h-full p-2 gap-2 ${activeChat?.id ? "" : "hidden"}`}>
       {
         chatLoading && <Loading/>
       }
