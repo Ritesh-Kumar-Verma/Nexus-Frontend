@@ -11,7 +11,7 @@ apiClient.interceptors.request.use((config)=>{
     }
     return config
 },(error)=>{
-    window.location.href("/login")
+    window.location.href("/Nexus/login")
     toast.error("Missing JWTtoken")
 })
 apiClient.interceptors.response.use((response)=>{
@@ -19,7 +19,7 @@ apiClient.interceptors.response.use((response)=>{
 },(error)=>{
     if(error.response && error.response.status == 401 || error.response.status == 403){
         localStorage.removeItem("jwttoken")
-        window.location.href="/login"
+        window.location.href="/Nexus/login"
     }
     return Promise.reject(error)
 })
