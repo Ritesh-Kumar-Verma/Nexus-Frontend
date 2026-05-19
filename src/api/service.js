@@ -11,15 +11,14 @@ apiClient.interceptors.request.use((config)=>{
     }
     return config
 },(error)=>{
-    window.location.href("/Nexus/login")
-    toast.error("Missing JWTtoken")
+    window.dispatchEvent(new CustomEvent('unauthorized'))
 })
 apiClient.interceptors.response.use((response)=>{
     return response
 },(error)=>{
-    if(error.response && error.response.status == 401 || error.response.status == 403){
+    if(error.response && error.response?.status == 401 || error.response?.status == 403){
         localStorage.removeItem("jwttoken")
-        window.location.href="/Nexus/login"
+        window.dispatchEvent(new CustomEvent('unauthorized'))
     }
     return Promise.reject(error)
 })

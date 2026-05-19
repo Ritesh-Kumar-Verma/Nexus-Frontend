@@ -6,9 +6,12 @@ import ActiveFriends from "./ActiveFriends";
 import { authAPI, chatAPI, friendsAPI } from "../api/service";
 import { toast } from "react-toastify";
 import Welcome from "./Welcome";
+import { useNavigate } from "react-router-dom";
 const Home = () => {
   const [activeChat, setActiveChat] = useState({});
     const [chatLoading, setChatLoading] = useState(false)
+    const [serverStatus , setServerStatus] = useState(true)
+    const navigate = useNavigate()
 
   const [currentUser, setCurrentUser] = useState({
     avtar:null,
@@ -27,6 +30,7 @@ const Home = () => {
 
   useEffect(() => {
     handleGetProfile();
+    window.addEventListener('unauthorized',()=>navigate('/login'))
     // getFriendsRequest();
   }, []);
 
