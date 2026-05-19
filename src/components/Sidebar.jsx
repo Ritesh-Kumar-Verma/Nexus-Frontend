@@ -28,7 +28,6 @@ const Sidebar = ({ user, setUser, serverList, activeChat, setActiveChat }) => {
   };
   useEffect(() => {
     handleGetFriendRequest();
-
     handleGetFriendList();
   }, []);
 
@@ -61,7 +60,8 @@ const Sidebar = ({ user, setUser, serverList, activeChat, setActiveChat }) => {
   const handleAcceptRequest = async (username) => {
     try {
       const response = await friendsAPI.acceptFriendRequest(username);
-      console.log(response);
+      handleGetFriendRequest()
+      // console.log(response);
     } catch (error) {
       console.log(error);
     }

@@ -34,9 +34,6 @@ const Home = () => {
     // getFriendsRequest();
   }, []);
 
-
-
-
   useEffect(()=>{
 handleActiveChat()
   },[currentUser,activeChat])
