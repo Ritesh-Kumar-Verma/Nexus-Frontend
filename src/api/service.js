@@ -28,7 +28,9 @@ export const authAPI = {
     login : ({username,password})=>
         apiClient.post('/auth/login',{username,password}),
     getProfile: ()=>
-        apiClient.get('/auth/getprofile')
+        apiClient.get('/auth/getprofile'),
+    status : ()=>
+        apiClient.get('/auth/health')
     
 }
 
