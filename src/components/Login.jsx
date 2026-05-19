@@ -1,15 +1,29 @@
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import { authAPI } from "../api/service";
 import { redirect, useNavigate } from "react-router-dom";
 import Toast from "./Toast";
 import { toast } from "react-toastify";
-import Loading from "./Loading"
+import Loading from "./Loading";
 const Login = () => {
   const navigate = useNavigate();
 
-  const [page, setPage] = useState("login");
-    const [isAuthChecking, setIsAuthChecking] = useState(false)
+  const [serverStatus, setServerStatus] = useState(null);
 
+  const handleCheckStatus = async () => {
+    try {
+      const res =await authAPI.status();
+      return res.status
+    } catch (error) {
+      console.log(error);
+    }
+  };
+
+  useEffect(() => {
+    setServerStatus(handleCheckStatus())
+  }, []);
+
+  const [page, setPage] = useState("login");
+  const [isAuthChecking, setIsAuthChecking] = useState(false);
 
   const [userLoginInfo, setUserLoginInfo] = useState({
     username: "",
@@ -48,21 +62,18 @@ const Login = () => {
     }
 
     try {
-      setIsAuthChecking(true)
+      setIsAuthChecking(true);
       const data = await authAPI.signup(userLoginInfo);
       localStorage.setItem("jwttoken", data.data);
-      setIsAuthChecking(false)
+      setIsAuthChecking(false);
       navigate("/home");
-      
     } catch (error) {
-      setIsAuthChecking(false)
-      if(error.response.status == 409){
+      setIsAuthChecking(false);
+      if (error.response.status == 409) {
         toast.error("Username Taken");
+      } else {
+        console.log(error.response);
       }
-      else{
-        console.log(error.response)
-      }
-      
     }
   };
 
@@ -74,23 +85,28 @@ const Login = () => {
     }
 
     try {
-      setIsAuthChecking(true)
+      setIsAuthChecking(true);
       const data = await authAPI.login(userLoginInfo);
       // console.log(data.data);
       localStorage.setItem("jwttoken", data.data);
       // console.log("navigating to home")
-      setIsAuthChecking(false)
+      setIsAuthChecking(false);
       navigate("/home");
     } catch (errorMessage) {
-      setIsAuthChecking(false)
+      setIsAuthChecking(false);
       toast.error("Wrong username or password");
     }
   };
 
   return (
-    <div className="relative min-h-screen flex items-center justify-center  p-6">
+    <div className="relative min-h-screen flex items-center justify-center  p-6 ">
       <Toast />
-      {isAuthChecking && <Loading fullScreen={true}/>}
+      <div
+        className={` absolute top-5 right-5 h-fit border-2 px-2 rounded-lg ${serverStatus ? "bg-green-600 text-white/90" : "bg-red-400 text-black/60"} `}
+      >
+        Server {serverStatus ? "Online" : "Offline"}
+      </div>
+      {isAuthChecking && <Loading fullScreen={true} />}
 
       <div className="w-full max-w-225 h-140 bg-[linear-gradient(180deg,#1b2a3a_0%,#391f44_100%)] rounded-2xl  overflow-hidden flex shadow-[0_0_20px_rgba(0,255,255,0.4)] hover:shadow-[0_0_25px_rgba(0,255,255,0.7)]">
         {/* left half */}
