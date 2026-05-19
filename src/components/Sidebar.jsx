@@ -99,7 +99,7 @@ const Sidebar = ({ user, setUser, serverList, activeChat, setActiveChat }) => {
         ))}
       </div>
 
-      <div className="  w-full  h-full flex flex-col  items-center   max-sm:w-full max-sm:items-end ">
+      <div className="  w-full  h-full flex flex-col  items-center   max-sm:w-full  max-sm:items-end ">
         {/* Logo */}
         {/* <div className="text-2xl border  rounded-xl px-2 py-1 w-full flex gap-2">
         <img src={assets.Nexus} className="h-8   " alt="" />
@@ -107,7 +107,7 @@ const Sidebar = ({ user, setUser, serverList, activeChat, setActiveChat }) => {
       </div> */}
 
         {/* Search Box */}
-        <div className="h-15 flex items-center border-b border-white/30 px-3">
+        <div className="h-15 border-2 w-full flex items-center border-b border-white/30 px-3">
 
         <div className=" flex items-center border rounded-md border-[#4A3153] relative max-sm:w-full bg-[#1A1A24]  justify-between ">
           <div className="flex w-full justify-start items-center">

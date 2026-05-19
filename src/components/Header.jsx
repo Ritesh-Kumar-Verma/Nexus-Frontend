@@ -15,12 +15,15 @@ const Header = ({currentUser,activeChat,setActiveChat,setMessages}) => {
         />}
 
 
+<div className='flex justify-between w-full pr-2'>
+
 
         <div className='text-xl text-white '>{activeChat && activeChat.id ? activeChat.username : ""}</div>
 
 
-        <div className='bg-blue-400 border-2 text-white'>{currentUser.username}</div>
+        <div className=' bg-green-400 border-2 text-white px-2 rounded-lg '>{currentUser.username}</div>
         
+</div>
         
 
 

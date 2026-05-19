@@ -9,11 +9,14 @@ import Loading from "./Loading";
 const ChatBox = ({ currentUser, activeChat,messages,setMessages,chatLoading,setChatLoading }) => {
   
   const [messageInput, setMessageInput] = useState("");
+  const messageEndRef = useRef(null)
   const stompClientRef = useRef(null);
 
   const apiURL = import.meta.env.VITE_API_URL
 
- 
+ const scrollToEnd= () =>{
+  messageEndRef.current?.scrollIntoView({behavior : "smooth"})
+ }
 
   useEffect(() => {
     if (!currentUser?.id || !activeChat?.id) return;
@@ -61,11 +64,13 @@ const ChatBox = ({ currentUser, activeChat,messages,setMessages,chatLoading,setC
     };
   }, [currentUser?.id, activeChat?.id]);
 
-  // useEffect(()=>{
+  useEffect(()=>{
 
-  //   // console.log("Messages=",messages)
+    // console.log("Messages=",messages)
 
-  // },[messages])
+    scrollToEnd()
+
+  },[messages])
 
 
 
@@ -97,12 +102,12 @@ const ChatBox = ({ currentUser, activeChat,messages,setMessages,chatLoading,setC
   };
 
   return (
-    <div className={`apear glass-chatbox flex flex-col h-full p-2 gap-2 ${activeChat?.id ? "" : "hidden"}`}>
+    <div className={` apear glass-chatbox flex flex-col h-full p-2 overflow-hidden gap-2 ${activeChat?.id ? "" : "hidden"}`}>
       {
         chatLoading && <Loading/>
       }
       
-      <div className="flex-1 overflow-y-auto scrollbar-hide">
+      <div className="flex-1 overflow-y-auto scrollbar-none scroll-smooth">
         {messages.map((msg, index) => {
           const isMe = msg.senderId === currentUser.id;
           const displayName = isMe ? currentUser.username : activeChat?.username;
@@ -120,12 +125,13 @@ const ChatBox = ({ currentUser, activeChat,messages,setMessages,chatLoading,setC
                   {displayName}{" "}
                   <span className="text-[#9CA3AF] text-sm ml-1">{formatTime(msg.timeStamp)}</span>
                 </div>
-                <div className=" text-[#DCDDDE] break-words">{msg.content}</div>
+                <div className=" text-[#DCDDDE] wrap-break-word">{msg.content}</div>
               </div>
             </div>
             </div>
           );
         })}
+        <div ref={messageEndRef} />
       </div>
 
       <div className="flex items-center bg-[#1A1C29] rounded-xl px-2 py-1 mx-4 mb-4 mt-2">
@@ -134,7 +140,7 @@ const ChatBox = ({ currentUser, activeChat,messages,setMessages,chatLoading,setC
           value={messageInput}
           onChange={(e) => setMessageInput(e.target.value)}
           onKeyDown={(e) => e.key === 'Enter' && sendMessage()}
-          placeholder={`Message @${activeChat?.username || "User"}`}
+          placeholder={`Message @${activeChat?.username}`}
           className="bg-transparent flex-1 focus:outline-none text-[#DBDEE1] p-3 placeholder:text-[#949BA4]"
         />
 

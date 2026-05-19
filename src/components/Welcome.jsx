@@ -4,7 +4,7 @@ import { faComments, faBolt, faShieldHalved } from "@fortawesome/free-solid-svg-
 
 const Welcome = ({activeChat,currentUser}) => {
   return (
-    <div className={`flex flex-col items-center justify-center h-full w-full bg-[#313338] text-[#DCDDDE] p-8 text-center rounded-lg ${activeChat.id ?"hidden" :"" }`}>
+    <div className={`flex flex-col items-center justify-center h-full w-full bg-[#313338] text-[#DCDDDE] p-8 text-center rounded-lg ${activeChat.id ?"hidden" :"" } max-sm:hidden `}>
       
       {/* Icon Container */}
       <div className="bg-[#2B2D31] p-6 rounded-full mb-6 shadow-lg border border-[#1E1F22]">
