@@ -66,8 +66,12 @@ handleActiveChat()
         if(activeChat && activeChat.id){
           
           const res =await chatAPI.getChat(currentUser.id,activeChat.id)
-          // console.log(res.data)
-          setMessages(()=>res.data)
+          console.log("message=",res.data)
+          setMessages(()=>{
+            let tempMessages = res.data
+            tempMessages.sort((a,b)=>a.timeStamp - b.timeStamp)
+            return tempMessages
+          })
           
         }
         setChatLoading(false)

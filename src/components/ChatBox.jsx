@@ -76,8 +76,9 @@ const ChatBox = ({ currentUser, activeChat,messages,setMessages,chatLoading,setC
         senderId: currentUser.id,
         receiverId: activeChat.id,
         content: messageInput,
-        timeStamp: new Date()
+        timeStamp: Date.now()
       };
+      
 
       stompClientRef.current.publish({
         destination: '/app/chat',
